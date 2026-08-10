@@ -226,7 +226,7 @@ input {
   width: var(--collapsed-island-width);
   height: 58px;
   border-radius: 999px;
-  cursor: grab;
+  cursor: default;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.22)),
     var(--island-background-color);
@@ -413,6 +413,7 @@ input {
 }
 
 .island__quiet-button {
+  position: relative;
   width: 16px;
   height: 16px;
   display: inline-grid;
@@ -432,6 +433,12 @@ input {
     background 140ms ease,
     border-color 140ms ease,
     transform 140ms ease;
+}
+
+.island__quiet-button::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
 }
 
 .island__quiet-button:hover {
@@ -553,7 +560,7 @@ input {
 }
 
 .island--collapsed:active {
-  cursor: grabbing;
+  cursor: default;
 }
 
 .island__title {
