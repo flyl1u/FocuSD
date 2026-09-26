@@ -100,10 +100,11 @@ impl ClipboardHistorySettings {
     }
 }
 
-struct ShortcutBinding {
-    label: String,
-    modifiers: u32,
-    key_code: u32,
+#[derive(Clone)]
+pub(crate) struct ShortcutBinding {
+    pub(crate) label: String,
+    pub(crate) modifiers: u32,
+    pub(crate) key_code: u32,
 }
 
 fn default_clipboard_shortcut() -> String {
@@ -935,7 +936,7 @@ fn set_hotkey_registered(value: bool) {
     }
 }
 
-fn parse_shortcut_binding(shortcut: &str) -> Option<ShortcutBinding> {
+pub(crate) fn parse_shortcut_binding(shortcut: &str) -> Option<ShortcutBinding> {
     let mut has_ctrl = false;
     let mut has_alt = false;
     let mut has_shift = false;

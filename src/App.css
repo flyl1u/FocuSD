@@ -224,7 +224,7 @@ input {
 
 .island--collapsed {
   width: var(--collapsed-island-width);
-  height: 58px;
+  height: 54px;
   border-radius: 999px;
   cursor: default;
   background:

@@ -1,5 +1,6 @@
 mod clipboard_history;
 mod media_control;
+mod translation;
 
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Map, Value};
@@ -29,10 +30,11 @@ const WINDOW_LABEL: &str = "main";
 const STAGE_WINDOW_WIDTH: f64 = 820.0;
 const STAGE_WINDOW_HEIGHT: f64 = 460.0;
 const DEFAULT_MARGIN_Y: f64 = 12.0;
-const DEFAULT_SCALE: f64 = 1.0;
+const DEFAULT_COLLAPSED_SCALE: f64 = 0.81;
+const DEFAULT_EXPANDED_SCALE: f64 = 0.88;
 const MIN_COLLAPSED_ISLAND_WIDTH: f64 = 240.0;
 const COLLAPSED_ISLAND_WIDTH: f64 = 320.0;
-const COLLAPSED_ISLAND_HEIGHT: f64 = 58.0;
+const COLLAPSED_ISLAND_HEIGHT: f64 = 54.0;
 const EXPANDED_ISLAND_WIDTH: f64 = 560.0;
 const DEFAULT_EXPANDED_ISLAND_HEIGHT: f64 = 306.0;
 const EXPANDED_ISLAND_HEIGHT_RANGE: f64 = 240.0;
@@ -92,7 +94,8 @@ impl IslandMode {
 struct IslandWindowState {
     mode: IslandMode,
     is_tucked: bool,
-    size_scale: f64,
+    collapsed_scale: f64,
+    expanded_scale: f64,
     margin_y: f64,
     collapsed_width: f64,
     expanded_height: f64,
@@ -101,6 +104,15 @@ struct IslandWindowState {
     glass_enabled: bool,
     glass_intensity: f64,
     glass_tint: (u8, u8, u8),
+}
+
+impl IslandWindowState {
+    fn active_scale(self) -> f64 {
+        match self.mode {
+            IslandMode::Collapsed => self.collapsed_scale,
+            IslandMode::Expanded => self.expanded_scale,
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Serialize)]
@@ -114,7 +126,8 @@ impl Default for IslandWindowState {
         Self {
             mode: IslandMode::Collapsed,
             is_tucked: false,
-            size_scale: DEFAULT_SCALE,
+            collapsed_scale: DEFAULT_COLLAPSED_SCALE,
+            expanded_scale: DEFAULT_EXPANDED_SCALE,
             margin_y: DEFAULT_MARGIN_Y,
             collapsed_width: COLLAPSED_ISLAND_WIDTH,
             expanded_height: DEFAULT_EXPANDED_ISLAND_HEIGHT,
@@ -130,7 +143,8 @@ impl Default for IslandWindowState {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct IslandLayout {
-    size_scale: f64,
+    collapsed_scale: f64,
+    expanded_scale: f64,
     margin_y: f64,
 }
 
@@ -199,7 +213,8 @@ fn default_agent_phase() -> String {
 fn set_island_layout(app: AppHandle, layout: IslandLayout) -> Result<(), String> {
     let window = main_window(&app)?;
     let state = mutate_window_state(|state| {
-        state.size_scale = layout.size_scale.clamp(0.75, 1.4);
+        state.collapsed_scale = layout.collapsed_scale.clamp(0.75, 1.4);
+        state.expanded_scale = layout.expanded_scale.clamp(0.75, 1.4);
         state.margin_y = layout.margin_y.clamp(0.0, 160.0);
         *state
     });
@@ -210,7 +225,8 @@ fn set_island_layout(app: AppHandle, layout: IslandLayout) -> Result<(), String>
 fn set_island_interaction(
     app: AppHandle,
     mode: String,
-    size_scale: f64,
+    collapsed_scale: f64,
+    expanded_scale: f64,
     margin_y: Option<f64>,
     expanded_height: Option<f64>,
     collapsed_width: Option<f64>,
@@ -232,7 +248,8 @@ fn set_island_interaction(
     let state = mutate_window_state(|state| {
         state.mode = mode;
         state.is_tucked = is_tucked.unwrap_or(false);
-        state.size_scale = size_scale.clamp(0.75, 1.4);
+        state.collapsed_scale = collapsed_scale.clamp(0.75, 1.4);
+        state.expanded_scale = expanded_scale.clamp(0.75, 1.4);
         if let Some(margin_y) = margin_y {
             state.margin_y = margin_y.clamp(0.0, 160.0);
         }
@@ -1178,8 +1195,8 @@ fn apply_stage_geometry(window: &WebviewWindow, state: IslandWindowState) -> Res
     let (_, base_height) = state
         .mode
         .base_size(state.collapsed_width, state.expanded_height);
-    let stage_height =
-        STAGE_WINDOW_HEIGHT.max((base_height * state.size_scale).ceil() + STAGE_WINDOW_PADDING_Y);
+    let stage_height = STAGE_WINDOW_HEIGHT
+        .max((base_height * state.active_scale()).ceil() + STAGE_WINDOW_PADDING_Y);
 
     window
         .set_size(Size::Logical(LogicalSize::new(
@@ -1207,7 +1224,7 @@ fn apply_stage_geometry(window: &WebviewWindow, state: IslandWindowState) -> Res
     let monitor_size = monitor.size();
     let physical_width = (STAGE_WINDOW_WIDTH * scale).round() as i32;
     let physical_top_offset = if matches!(state.mode, IslandMode::Collapsed) && state.is_tucked {
-        -((COLLAPSED_ISLAND_HEIGHT * state.size_scale - TUCKED_VISIBLE_EDGE_HEIGHT).max(0.0)
+        -((COLLAPSED_ISLAND_HEIGHT * state.collapsed_scale - TUCKED_VISIBLE_EDGE_HEIGHT).max(0.0)
             * scale)
             .round() as i32
     } else {
@@ -1318,11 +1335,11 @@ fn cursor_is_inside_island(window: &WebviewWindow) -> bool {
     let (base_width, base_height) = state
         .mode
         .base_size(state.collapsed_width, state.expanded_height);
-    let island_width = base_width * state.size_scale * physical_scale;
-    let island_height = base_height * state.size_scale * physical_scale;
+    let island_width = base_width * state.active_scale() * physical_scale;
+    let island_height = base_height * state.active_scale() * physical_scale;
     let island_left = (window_width - island_width) / 2.0;
     let island_top = 0.0;
-    let radius = state.mode.corner_radius() * state.size_scale * physical_scale;
+    let radius = state.mode.corner_radius() * state.active_scale() * physical_scale;
 
     point_in_rounded_rect(
         local_x,
@@ -1379,7 +1396,8 @@ mod tests {
     fn state(mode: IslandMode, scale: f64, expanded_height: f64) -> IslandWindowState {
         IslandWindowState {
             mode,
-            size_scale: scale,
+            collapsed_scale: scale,
+            expanded_scale: scale,
             expanded_height,
             ..IslandWindowState::default()
         }
@@ -1452,6 +1470,13 @@ pub fn run() {
         }))
         .plugin(tauri_plugin_opener::init())
         .on_window_event(|window, event| {
+            if window.label() == "translation" {
+                if let WindowEvent::CloseRequested { api, .. } = event {
+                    api.prevent_close();
+                    let _ = window.hide();
+                }
+                return;
+            }
             if window.label() != WINDOW_LABEL {
                 return;
             }
@@ -1469,6 +1494,7 @@ pub fn run() {
             if let Err(error) = clipboard_history::init(app.handle()) {
                 eprintln!("failed to initialize clipboard history: {error}");
             }
+            translation::init(app.handle());
             if let Ok(window) = main_window(app.handle()) {
                 if let Err(error) = apply_stage_geometry(&window, IslandWindowState::default()) {
                     eprintln!("failed to size and position island window: {error}");
@@ -1502,7 +1528,16 @@ pub fn run() {
             clipboard_history::toggle_clipboard_history_favorite,
             clipboard_history::set_clipboard_history_item_note,
             clipboard_history::delete_clipboard_history_item,
-            clipboard_history::clear_clipboard_history
+            clipboard_history::clear_clipboard_history,
+            translation::toggle_translation_window,
+            translation::hide_translation_window,
+            translation::read_translation_clipboard,
+            translation::copy_translation_result,
+            translation::has_translation_secret,
+            translation::save_translation_secret,
+            translation::delete_translation_secret,
+            translation::translate_text,
+            translation::set_translation_shortcut,
         ])
         .run(tauri::generate_context!())
         .expect("error while running FocuSD Island");

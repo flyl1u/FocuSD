@@ -23,6 +23,20 @@
         "skipTaskbar": true,
         "visible": false,
         "shadow": false
+      },
+      {
+        "label": "translation",
+        "title": "FocuSD 翻译",
+        "url": "index.html?window=translation",
+        "width": 640,
+        "height": 400,
+        "decorations": false,
+        "transparent": true,
+        "resizable": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "visible": false,
+        "shadow": false
       }
     ],
     "security": {

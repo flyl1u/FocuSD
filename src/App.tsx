@@ -20,6 +20,7 @@ import {
   GripVertical,
   ImageIcon,
   Keyboard,
+  Languages,
   LocateFixed,
   Minus,
   NotebookPen,
@@ -154,7 +155,8 @@ type IslandSettings = {
   appearanceMode: AppearanceMode;
   glassIntensity: number;
   opacity: number;
-  sizeScale: number;
+  collapsedScale: number;
+  expandedScale: number;
   marginY: number;
   taskTextColor: string;
   pulseColor: string;
@@ -191,6 +193,7 @@ type IslandShellProps = {
   onCollapse: () => void;
   onResetPosition: () => void;
   onMinimize: () => void;
+  onOpenTranslator: () => void;
   onTuck: () => void;
   onReveal: () => void;
   onPageChange: (page: IslandPage) => void;
@@ -261,7 +264,8 @@ const DEFAULT_SETTINGS: IslandSettings = {
   appearanceMode: "liquidGlass",
   glassIntensity: 72,
   opacity: 95,
-  sizeScale: 1,
+  collapsedScale: 0.81,
+  expandedScale: 0.88,
   marginY: 31,
   taskTextColor: DEFAULT_TASK_TEXT_COLOR,
   pulseColor: "#49e18f",
@@ -277,6 +281,7 @@ const LEGACY_DEFAULT_PRESET_NAMES = new Set(["白色", "卡其"]);
 
 type LegacyIslandSettings = Partial<IslandSettings> & {
   margin?: number;
+  sizeScale?: number;
   taskTitleColor?: string;
   pendingTodoColor?: string;
 };
@@ -534,8 +539,13 @@ function normalizeSettings(
       100,
     ),
     opacity: clamp(Number(settings?.opacity ?? DEFAULT_SETTINGS.opacity), 50, 100),
-    sizeScale: clamp(
-      Number(settings?.sizeScale ?? DEFAULT_SETTINGS.sizeScale),
+    collapsedScale: clamp(
+      Number(settings?.collapsedScale ?? settings?.sizeScale ?? DEFAULT_SETTINGS.collapsedScale),
+      0.75,
+      1.4,
+    ),
+    expandedScale: clamp(
+      Number(settings?.expandedScale ?? settings?.sizeScale ?? DEFAULT_SETTINGS.expandedScale),
       0.75,
       1.4,
     ),
@@ -887,6 +897,7 @@ function IslandShell({
   onCollapse,
   onResetPosition,
   onMinimize,
+  onOpenTranslator,
   onTuck,
   onReveal,
   onPageChange,
@@ -1169,6 +1180,18 @@ function IslandShell({
           />
 
           <div className="window-actions">
+            <button
+              className="icon-button"
+              type="button"
+              title="翻译（Alt+Space）"
+              aria-label="打开翻译"
+              onClick={(event) => {
+                event.stopPropagation();
+                onOpenTranslator();
+              }}
+            >
+              <Languages size={17} strokeWidth={2.2} />
+            </button>
             <button
               className="icon-button"
               type="button"
@@ -1647,13 +1670,22 @@ function LayoutEditor({
           onChange={(opacity) => onSettingsChange({ ...settings, opacity })}
         />
         <SliderControl
-          label="整体大小"
-          value={settings.sizeScale}
+          label="折叠岛屿大小"
+          value={settings.collapsedScale}
           min={0.75}
           max={1.4}
           step={0.01}
           suffix="x"
-          onChange={(sizeScale) => onSettingsChange({ ...settings, sizeScale })}
+          onChange={(collapsedScale) => onSettingsChange({ ...settings, collapsedScale })}
+        />
+        <SliderControl
+          label="展开面板大小"
+          value={settings.expandedScale}
+          min={0.75}
+          max={1.4}
+          step={0.01}
+          suffix="x"
+          onChange={(expandedScale) => onSettingsChange({ ...settings, expandedScale })}
         />
         <SliderControl
           label="上下边距"
@@ -3437,7 +3469,7 @@ function App() {
 
       return ({
         "--island-opacity": settings.opacity / 100,
-        "--island-scale": settings.sizeScale,
+        "--island-scale": mode === "collapsed" ? settings.collapsedScale : settings.expandedScale,
         "--collapsed-island-width": `${collapsedIslandWidth}px`,
         "--expanded-island-height": `${expandedIslandHeight}px`,
         "--task-text-color": settings.taskTextColor,
@@ -3470,12 +3502,14 @@ function App() {
     [
       expandedIslandHeight,
       collapsedIslandWidth,
+      mode,
       settings.glassIntensity,
       settings.islandBackgroundColor,
       settings.opacity,
       settings.pulseBrightness,
       settings.pulseColor,
-      settings.sizeScale,
+      settings.collapsedScale,
+      settings.expandedScale,
       settings.taskTextColor,
       settings.todoBackgroundColor,
     ],
@@ -3485,7 +3519,8 @@ function App() {
     try {
       await invoke("set_island_layout", {
         layout: {
-          sizeScale: nextSettings.sizeScale,
+          collapsedScale: nextSettings.collapsedScale,
+          expandedScale: nextSettings.expandedScale,
           marginY: nextSettings.marginY,
         },
       });
@@ -3548,7 +3583,8 @@ function App() {
           "set_island_interaction",
           {
           mode: nextMode,
-          sizeScale: nextSettings.sizeScale,
+          collapsedScale: nextSettings.collapsedScale,
+          expandedScale: nextSettings.expandedScale,
           marginY: nextSettings.marginY,
           expandedHeight: nextExpandedHeight,
           collapsedWidth: nextCollapsedWidth,
@@ -4670,7 +4706,8 @@ function App() {
     settings.appearanceMode,
     settings.glassIntensity,
     settings.islandBackgroundColor,
-    settings.sizeScale,
+    settings.collapsedScale,
+    settings.expandedScale,
     showReadyIsland,
     syncNativeInteraction,
   ]);
@@ -4728,6 +4765,12 @@ function App() {
     [agentStatus],
   );
 
+  const openTranslator = useCallback(() => {
+    void invoke("toggle_translation_window").catch((error) => {
+      console.error("Failed to open translation", error);
+    });
+  }, []);
+
   return (
     <main className="stage" style={stageStyle}>
       <IslandShell
@@ -4747,6 +4790,7 @@ function App() {
         onCollapse={collapseIsland}
         onResetPosition={resetIslandPosition}
         onMinimize={minimizeIsland}
+        onOpenTranslator={openTranslator}
         onTuck={tuckIsland}
         onReveal={revealIsland}
         onPageChange={setPage}
