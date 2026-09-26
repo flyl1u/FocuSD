@@ -1,74 +1,79 @@
 <div align="center">
-  <img src="src-tauri/icons/128x128.png" alt="FocuSD Island Logo" width="96" height="96">
+  <img src="src-tauri/icons/128x128.png" alt="FocuSD Island 图标" width="96" height="96">
 
   <h1>FocuSD Island</h1>
 
+  <p>把待办、剪贴板、Codex状态和快捷翻译放在屏幕顶部的Windows灵动岛</p>
+
   <p>
-    一款 Windows 灵动岛效率工具，把待办、每日笔记、Codex 状态指示灯、剪切板历史和媒体控制放在屏幕顶部，现已支持毛玻璃风格
+    <a href="https://github.com/zzliu93-debug/FocuSD/releases/latest">下载 Windows 版</a>
+    ·
+    <a href="https://github.com/zzliu93-debug/FocuSD/issues">反馈问题</a>
   </p>
 
   <p>
-    <a href="https://github.com/zzliu93-debug/FocuSD/releases/latest">下载 Release</a>
-    ·
-    <a href="https://github.com/zzliu93-debug/FocuSD/issues">反馈 Issue</a>
-    ·
-    <a href="https://github.com/zzliu93-debug/FocuSD/stargazers">GitHub Stars</a>
-  </p>
-
-  <p>
-    <img alt="Version" src="https://img.shields.io/badge/version-0.2.3-blue">
+    <img alt="Version" src="https://img.shields.io/badge/version-0.2.4-blue">
     <img alt="Platform" src="https://img.shields.io/badge/platform-Windows-0078D4">
     <img alt="Tauri" src="https://img.shields.io/badge/Tauri-2-24C8DB">
     <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB">
-    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6">
-    <a href="https://github.com/zzliu93-debug/FocuSD/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/zzliu93-debug/FocuSD?style=flat"></a>
   </p>
 </div>
 
-## 关于项目
+## 它能做什么
 
-FocuSD Island 是一个 Windows 桌面悬浮效率工具。它以透明、无边框、始终置顶的小岛形式停靠在屏幕顶部，平时保持紧凑，需要时展开处理待办、笔记、剪切板和媒体控制。
+FocuSD Island 平时以紧凑的小岛停靠在屏幕顶部，需要时展开操作。窗口无边框、始终置顶，可设置折叠和展开后的尺寸，也可从托盘管理。
 
-它的目标不是模拟一个装饰性的灵动岛，而是把容易打断注意力的常用入口集中起来，并让你不切回终端也能看到 Codex 任务状态。项目目前优先适配 Windows。
-
-## 核心功能
-
-| 功能 | 说明 |
+| 功能 | 用法 |
 | --- | --- |
-| 悬浮岛 | 透明、无边框、始终置顶，支持折叠、边缘收起和托盘隐藏。 |
-| 待办与笔记 | 管理今日任务、专注任务和每日笔记，支持拖动排序、跨天延续与归档。 |
-| Markdown 保存 | 将每日内容保存为本地 `YYYY-MM-DD.md`。 |
-| Codex 状态 | 显示任务正在运行、已完成、失败或可能中断。 |
-| 剪切板历史 | 记录文本和图片，支持备注、搜索、收藏和复制。 |
-| 媒体与外观 | 控制系统媒体，独立设置折叠/展开尺寸，并提供经典与液态玻璃外观。 |
-| 快捷翻译 | `Alt+C` 打开置顶翻译窗，使用 DeepSeek 中英互译，支持剪贴板 Tab 补全。 |
+| 待办与每日笔记 | 安排今日任务、标记当前专注任务、拖动排序、回顾跨天归档；每日内容可保存为本地 Markdown。 |
+| 剪贴板历史 | 记录文本与图片，按内容或备注搜索，收藏常用片段并再次复制。 |
+| Codex 状态灯 | 在岛屿上查看 Codex 任务的运行、完成、失败或中断状态。 |
+| 快捷翻译 | 按 `Alt+C` 打开置顶翻译窗，使用 DeepSeek 进行中英互译。 |
+| 媒体与外观 | 控制系统媒体，调整岛屿布局、颜色、透明度和样式预设。 |
 
-## Codex 状态指示灯
+## 下载与安装
 
-FocuSD 可以通过 Codex hooks 显示 AI 编程任务的运行状态。在 **设置 → AI Agent 状态灯** 中点击 **安装/修复** 即可配置。
+面向 Windows 10/11。打开 [GitHub Releases](https://github.com/zzliu93-debug/FocuSD/releases/latest)，下载适合你的 x64 安装包：
 
-> [!IMPORTANT]
-> **Codex 状态灯不亮时，必须在 Codex 中信任 FocuSD hook。** 新版 Codex 会跳过未经审核和信任的命令 hook；仅在 FocuSD 中点击“安装/修复”还不够。
+- `FocuSD Island_0.2.4_x64-setup.exe`：常规安装程序，推荐多数用户使用。
+- `FocuSD Island_0.2.4_x64_en-US.msi`：适合需要 MSI 安装包的环境。
 
-安装后请在 Codex 的 **设置 → Hooks**（CLI 使用 `/hooks`）中找到两条 **Updating FocuSD agent status**，审核并信任，然后重启 Codex。
+运行安装包并按提示完成安装。应用使用 WebView2；如果系统尚未安装，需先安装 Microsoft Edge WebView2 Runtime。
 
-## 快速开始
+## 使用指南
 
-FocuSD Island 支持两种使用方式：直接下载 Release，或者通过源码自行构建。
+### 悬浮岛与日常记录
 
-### 方式一：通过 Release 安装
+展开岛屿即可添加待办、设置当前专注任务和写每日笔记。你可以在设置中分别调整折叠岛与展开岛的尺寸；新用户默认值分别为 `0.82` 和 `0.91`。需要保存每日内容时，在设置中选择 Markdown 文件夹，应用会按 `YYYY-MM-DD.md` 写入。默认 Todo 文件夹为 `%USERPROFILE%\Documents\FocuSD`。
 
-适合只想直接使用应用的用户。
+剪贴板历史支持文本、图片、备注、搜索和收藏。它与快捷翻译读取的系统剪贴板是两个功能：即使没有打开历史面板，翻译窗的 `Tab` 仍会读取当前最新复制的文本。
 
-1. 打开本仓库的 [GitHub Releases](https://github.com/zzliu93-debug/FocuSD/releases/latest) 页面。
-2. 下载最新版本的 Windows 安装包。
-3. 推荐优先下载 `FocuSD Island_版本号_x64-setup.exe`。
-4. 双击安装包，按提示完成安装。
-5. 首次启动后，可在设置中配置 Markdown 保存目录、开机自启动、Codex 状态指示灯、剪切板历史和样式预设。
+### 快捷翻译
 
-如果 Release 页面暂时没有安装包，可以使用下面的源码构建方式。
+按 `Alt+C` 或点击岛屿中的翻译按钮打开翻译窗；再次按快捷键或点击关闭按钮即可隐藏。翻译窗默认居中并保持置顶，可以拖动标题栏移动，也可以拖动右侧、下侧和右下角调整大小。本次运行期间会记住你调整后的位置与尺寸。
 
-### 方式二：通过源码构建
+| 操作 | 效果 |
+| --- | --- |
+| `Tab` | 在翻译主界面的任意控件上，重新读取**当前**文本剪贴板并替换原文。 |
+| `Enter` | 翻译原文。 |
+| `Shift+Enter` | 在原文中换行。 |
+| `Alt+C` | 打开或关闭翻译窗；可在翻译设置中修改。 |
+
+可选择自动识别、中文译英文或英文译中文。翻译由 DeepSeek API 提供，首次使用时请在翻译窗设置中填入自己的 API 密钥。密钥存入本机 Windows 凭据管理器；只有发起翻译时，原文才会发送至 DeepSeek。单次最多翻译 5,000 字。
+
+如果 `Alt+C` 已被其他软件占用，请在翻译设置中录入新的全局快捷键。
+
+### Codex 状态灯
+
+在 **设置 → AI Agent 状态灯** 中点击 **安装/修复**，然后前往 Codex 的 **设置 → Hooks**（CLI 使用 `/hooks`），找到两条 **Updating FocuSD agent status**，审核并信任它们，最后重启 Codex。未经信任的 hook 可能被 Codex 跳过。
+
+状态文件位于 `%APPDATA%\com.focusd.island\agent-status.json`。
+
+## 数据与隐私
+
+待办、笔记、归档、外观和翻译偏好保存在本机。剪贴板历史与 Codex 状态保存在应用数据目录；你选择 Markdown 保存目录后，每日内容也会写入该目录。DeepSeek API 密钥保存在 Windows 凭据管理器，翻译原文会在你主动翻译时发送给 DeepSeek。
+
+## 从源码构建
 
 需要 Windows 10/11、Node.js、pnpm、Rust、Visual Studio C++ Build Tools 和 WebView2 Runtime。
 
@@ -76,64 +81,29 @@ FocuSD Island 支持两种使用方式：直接下载 Release，或者通过源�
 git clone https://github.com/zzliu93-debug/FocuSD.git
 cd FocuSD
 pnpm install
-pnpm tauri build
-```
-
-开发模式：
-
-```powershell
 pnpm tauri dev
 ```
 
-## 使用说明
+构建供 GitHub Release 上传的安装包：
 
-### 待办与每日笔记
-
-- 在展开面板中添加今日待办，并将最重要的一条设为当前专注任务。
-- 每日笔记适合记录当天补充信息、临时想法或任务背景。
-- 跨天后，上一天内容会进入归档，方便回顾。
-- 如需本地保存，可在设置中选择 Markdown 保存目录。
-
-默认 Todo 保存路径为：
-
-```text
-%USERPROFILE%\Documents\FocuSD
+```powershell
+pnpm tauri build
 ```
 
-### 剪切板
+构建完成后，独立程序位于 `src-tauri/target/release/focusd-island.exe`，NSIS 安装包位于 `src-tauri/target/release/bundle/nsis/`，MSI 位于 `src-tauri/target/release/bundle/msi/`。
 
-- 开启剪切板历史后，应用会记录文本和图片剪切板内容。
-- 每条记录都可以添加备注，并通过内容或备注搜索。
-- 每条记录支持收藏、复制、删除。
-- 收藏内容会保留在收藏栏目中，适合保存高频片段。
+## 反馈与许可
 
-### Codex 状态
+欢迎通过 [Issue](https://github.com/zzliu93-debug/FocuSD/issues) 反馈问题，并附上 Windows 版本、应用版本、复现步骤及截图。仓库目前尚未声明开源许可证。
 
-- 在设置中安装或修复 Codex hooks。
-- 状态文件位于 `%APPDATA%\com.focusd.island\agent-status.json`。
-- 指示灯会根据 Codex 运行、完成、失败或超时状态变化。
+---
 
-### 外观与液态玻璃
+## English
 
-- 在设置中分别调整折叠岛和展开岛的尺寸。新用户默认分别为 0.82 和 0.91；旧设置会自动迁移。
-- 液态玻璃沿用原有的 CSS 玻璃外观，不读取桌面画面。
-- 经典主题保留原有背景色与透明度行为。
+FocuSD Island is an always-on-top Windows desktop island for tasks, daily notes, clipboard history, Codex status, media controls, and quick Chinese–English translation.
 
-### 快捷翻译
+Download the x64 `.exe` installer or `.msi` package from [GitHub Releases](https://github.com/zzliu93-debug/FocuSD/releases/latest). To build from source, install Node.js, pnpm, Rust, Visual Studio C++ Build Tools, and WebView2, then run `pnpm install` and `pnpm tauri build`.
 
-- 按 `Alt+C` 打开或关闭居中的翻译窗。它保持置顶，支持拖动标题栏和拖拽边缘调整尺寸；也可点击岛屿中的翻译按钮打开。再次打开时会保留本次运行期间调整的位置和尺寸。
-- 输入中文或英文后按 `Enter` 翻译；`Shift+Enter` 换行。打开时会预览最近的文本剪贴板内容，输入框为空时按 `Tab` 填入。
-- 使用 DeepSeek AI 翻译，需要在翻译窗的设置中填写 DeepSeek API 密钥。密钥保存在 Windows 凭据管理器，翻译偏好保存在本机设置中。
-- 可在翻译窗设置中修改全局快捷键。如果 `Alt+C` 被其他软件占用，应用会提示重新设置。
+Press `Alt+C` to open the DeepSeek translation window. Press `Tab` anywhere in its main view to read the **current text clipboard** and replace the source text, `Enter` to translate, or `Shift+Enter` for a new line. Add your own DeepSeek API key in translation settings; it is stored in Windows Credential Manager. Translation text is sent to DeepSeek only when you request a translation. The window stays on top and can be moved or resized.
 
-## 数据与存储
-
-待办、笔记、归档、外观和翻译偏好保存在本机。配置保存目录后，每日内容可写入 `YYYY-MM-DD.md`；剪切板历史和 Codex 状态保存在应用数据目录。翻译请求会将原文发送给所选服务商。
-
-## 参与贡献
-
-欢迎提交 [Issue](https://github.com/zzliu93-debug/FocuSD/issues) 和 Pull Request。反馈问题时请附上系统版本、应用版本、复现步骤和截图或录屏；提交 PR 时请说明改动内容和验证命令。
-
-## 许可证
-
-当前仓库暂未声明开源许可证。
+To enable the Codex status light, use **Settings → AI Agent status light → Install/Repair**, trust both **Updating FocuSD agent status** hooks in Codex, and restart Codex.

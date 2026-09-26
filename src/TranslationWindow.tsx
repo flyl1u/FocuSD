@@ -47,6 +47,7 @@ export default function TranslationWindow() {
   const [recordingShortcut, setRecordingShortcut] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const requestId = useRef(0);
+  const clipboardRequestId = useRef(0);
 
   useEffect(() => { localStorage.setItem(STORAGE_KEY, JSON.stringify(settings)); }, [settings]);
   useEffect(() => {
@@ -60,9 +61,26 @@ export default function TranslationWindow() {
   }, []);
 
   const refreshClipboard = useCallback(() => {
+    const currentId = ++clipboardRequestId.current;
     void invoke<string | null>("read_translation_clipboard")
-      .then((text) => setClipboardPreview(text ?? ""))
-      .catch(() => setClipboardPreview(""));
+      .then((text) => { if (currentId === clipboardRequestId.current) setClipboardPreview(text ?? ""); })
+      .catch(() => { if (currentId === clipboardRequestId.current) setClipboardPreview(""); });
+  }, []);
+
+  const pasteLatestClipboard = useCallback(async () => {
+    const currentId = ++clipboardRequestId.current;
+    try {
+      const text = await invoke<string | null>("read_translation_clipboard");
+      if (currentId !== clipboardRequestId.current) return;
+      if (!text) { setError("剪贴板中没有可粘贴的文本。"); return; }
+      setClipboardPreview(text);
+      setInput(text);
+      setError("");
+      setDidCopy(false);
+      inputRef.current?.focus();
+    } catch (failure) {
+      if (currentId === clipboardRequestId.current) setError(String(failure));
+    }
   }, []);
 
   const handleOpened = useCallback(() => {
@@ -73,6 +91,7 @@ export default function TranslationWindow() {
     setDidCopy(false);
     setIsLoading(false);
     setShowConfig(false);
+    setClipboardPreview("");
     refreshClipboard();
     window.requestAnimationFrame(() => inputRef.current?.focus());
   }, [refreshClipboard]);
@@ -89,6 +108,18 @@ export default function TranslationWindow() {
     });
     return () => { didCancel = true; unlisten?.(); };
   }, [handleOpened]);
+
+  useEffect(() => {
+    if (showConfig) return;
+    const handleTab = (event: globalThis.KeyboardEvent) => {
+      if (event.key !== "Tab" || event.isComposing || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return;
+      event.preventDefault();
+      event.stopPropagation();
+      void pasteLatestClipboard();
+    };
+    window.addEventListener("keydown", handleTab, true);
+    return () => window.removeEventListener("keydown", handleTab, true);
+  }, [pasteLatestClipboard, showConfig]);
 
   const submit = useCallback(async () => {
     const text = input.trim();
@@ -109,11 +140,7 @@ export default function TranslationWindow() {
   }, [input, settings.direction]);
 
   const handleInputKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Tab" && !event.shiftKey && !input && clipboardPreview) {
-      event.preventDefault();
-      setInput(clipboardPreview);
-      setError("");
-    } else if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
+    if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
       event.preventDefault();
       void submit();
     }
@@ -147,7 +174,7 @@ export default function TranslationWindow() {
     } catch (failure) { setError(String(failure)); }
   };
 
-  const close = () => { requestId.current += 1; void invoke("hide_translation_window"); };
+  const close = () => { requestId.current += 1; clipboardRequestId.current += 1; void invoke("hide_translation_window"); };
   const startWindowDrag = (event: PointerEvent<HTMLElement>) => {
     if (event.button !== 0 || (event.target as HTMLElement).closest("button")) return;
     void getCurrentWindow().startDragging().catch((failure) => console.error("Cannot drag translation window", failure));
@@ -209,8 +236,8 @@ export default function TranslationWindow() {
             <div className="translation-window__content">
               <section className="translation-window__panel translation-window__source">
                 <div className="translation-window__panel-heading"><h2>原文</h2><span>最多 5,000 字</span></div>
-                <textarea id="translation-input" ref={inputRef} value={input} onChange={(event) => { setInput(event.target.value); setError(""); setDidCopy(false); }} onKeyDown={handleInputKeyDown} placeholder="输入文本，或按 Tab 填入最新复制内容" />
-                {!input && clipboardPreview && <button type="button" className="translation-window__clipboard" onClick={() => { setInput(clipboardPreview); inputRef.current?.focus(); }} title="填入剪贴板内容"><Clipboard size={14} /><span>剪贴板：{clipboardPreview.slice(0, 120)}</span><kbd>Tab</kbd></button>}
+                <textarea id="translation-input" ref={inputRef} value={input} onChange={(event) => { setInput(event.target.value); setError(""); setDidCopy(false); }} onKeyDown={handleInputKeyDown} placeholder="输入文本，或按 Tab 粘贴最新复制内容" />
+                {!input && clipboardPreview && <button type="button" className="translation-window__clipboard" onClick={() => void pasteLatestClipboard()} title="粘贴最新剪贴板内容"><Clipboard size={14} /><span>剪贴板：{clipboardPreview.slice(0, 120)}</span><kbd>Tab</kbd></button>}
               </section>
               <section className="translation-window__panel translation-window__target">
                 <div className="translation-window__panel-heading"><h2>译文</h2><button type="button" className="translation-window__copy" onClick={() => void copyResult()} disabled={!output} title="复制译文" aria-label="复制译文">{didCopy ? <Check size={16} /> : <Copy size={16} />}</button></div>
