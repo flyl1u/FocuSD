@@ -134,8 +134,8 @@
   border: 1px solid #435368;
   border-radius: 8px;
 }
-.translation-window select { max-width: 155px; }
-.translation-window select option { color: #17202b; }
+.translation-window select { max-width: 155px; color-scheme: dark; }
+.translation-window select option { color: #f0f6ff; background: #263446; }
 
 .translation-window__content {
   display: grid;
@@ -256,6 +256,18 @@
   min-height: 0;
   overflow: auto;
   padding: 18px 22px 24px;
+}
+.translation-window__content,
+.translation-window__config,
+.translation-window__result,
+.translation-window textarea {
+  scrollbar-width: none;
+}
+.translation-window__content::-webkit-scrollbar,
+.translation-window__config::-webkit-scrollbar,
+.translation-window__result::-webkit-scrollbar,
+.translation-window textarea::-webkit-scrollbar {
+  display: none;
 }
 .translation-window__section-heading h2 { margin: 0 0 4px; font-size: 15px; }
 .translation-window__section-heading p { margin: 0; color: #9bb0c7; font-size: 11px; }

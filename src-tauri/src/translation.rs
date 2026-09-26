@@ -88,12 +88,9 @@ pub fn toggle_translation_window(app: AppHandle) -> Result<(), String> {
                 .primary_monitor()
                 .map_err(|error| error.to_string())?)
             .ok_or_else(|| "No monitor is available for translation.".to_string())?;
-        let logical_width = (monitor.size().width as f64 / monitor.scale_factor() - 32.0)
-            .min(640.0)
-            .max(480.0);
-        let logical_height = (monitor.size().height as f64 / monitor.scale_factor() - 32.0)
-            .min(440.0)
-            .max(350.0);
+        let logical_width = 480.0;
+        let logical_height =
+            (monitor.size().height as f64 / monitor.scale_factor() - 32.0).clamp(380.0, 640.0);
         window
             .set_size(Size::Logical(LogicalSize::new(
                 logical_width,
