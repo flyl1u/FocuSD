@@ -6,9 +6,9 @@
   <p>把待办、剪贴板、Codex状态和快捷翻译放在屏幕顶部的Windows灵动岛</p>
 
   <p>
-    <a href="https://github.com/zzliu93-debug/FocuSD/releases/latest">下载 Windows 版</a>
+    <a href="https://github.com/flyl1u/FocuSD/releases/latest">下载 Windows 版</a>
     ·
-    <a href="https://github.com/zzliu93-debug/FocuSD/issues">反馈问题</a>
+    <a href="https://github.com/flyl1u/FocuSD/issues">反馈问题</a>
   </p>
 
   <p>
@@ -33,7 +33,7 @@ FocuSD Island 平时以紧凑的小岛停靠在屏幕顶部，需要时展开操
 
 ## 下载与安装
 
-面向 Windows 10/11。打开 [GitHub Releases](https://github.com/zzliu93-debug/FocuSD/releases/latest)，下载适合你的 x64 安装包：
+面向 Windows 10/11。打开 [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest)，下载适合你的 x64 安装包：
 
 - `FocuSD Island_0.2.4_x64-setup.exe`：常规安装程序，推荐多数用户使用。
 - `FocuSD Island_0.2.4_x64_en-US.msi`：适合需要 MSI 安装包的环境。
@@ -78,7 +78,7 @@ FocuSD Island 平时以紧凑的小岛停靠在屏幕顶部，需要时展开操
 需要 Windows 10/11、Node.js、pnpm、Rust、Visual Studio C++ Build Tools 和 WebView2 Runtime。
 
 ```powershell
-git clone https://github.com/zzliu93-debug/FocuSD.git
+git clone https://github.com/flyl1u/FocuSD.git
 cd FocuSD
 pnpm install
 pnpm tauri dev
@@ -94,7 +94,7 @@ pnpm tauri build
 
 ## 反馈与许可
 
-欢迎通过 [Issue](https://github.com/zzliu93-debug/FocuSD/issues) 反馈问题，并附上 Windows 版本、应用版本、复现步骤及截图。仓库目前尚未声明开源许可证。
+欢迎通过 [Issue](https://github.com/flyl1u/FocuSD/issues) 反馈问题，并附上 Windows 版本、应用版本、复现步骤及截图。仓库目前尚未声明开源许可证。
 
 ---
 
@@ -102,7 +102,7 @@ pnpm tauri build
 
 FocuSD Island is an always-on-top Windows desktop island for tasks, daily notes, clipboard history, Codex status, media controls, and quick Chinese–English translation.
 
-Download the x64 `.exe` installer or `.msi` package from [GitHub Releases](https://github.com/zzliu93-debug/FocuSD/releases/latest). To build from source, install Node.js, pnpm, Rust, Visual Studio C++ Build Tools, and WebView2, then run `pnpm install` and `pnpm tauri build`.
+Download the x64 `.exe` installer or `.msi` package from [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest). To build from source, install Node.js, pnpm, Rust, Visual Studio C++ Build Tools, and WebView2, then run `pnpm install` and `pnpm tauri build`.
 
 Press `Alt+C` to open the DeepSeek translation window. Press `Tab` anywhere in its main view to read the **current text clipboard** and replace the source text, `Enter` to translate, or `Shift+Enter` for a new line. Add your own DeepSeek API key in translation settings; it is stored in Windows Credential Manager. Translation text is sent to DeepSeek only when you request a translation. The window stays on top and can be moved or resized.
 
