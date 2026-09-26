@@ -264,8 +264,8 @@ const DEFAULT_SETTINGS: IslandSettings = {
   appearanceMode: "liquidGlass",
   glassIntensity: 72,
   opacity: 95,
-  collapsedScale: 0.81,
-  expandedScale: 0.88,
+  collapsedScale: 0.82,
+  expandedScale: 0.91,
   marginY: 31,
   taskTextColor: DEFAULT_TASK_TEXT_COLOR,
   pulseColor: "#49e18f",
@@ -526,6 +526,14 @@ function normalizeSettings(
     settings?.taskTextColor ?? settings?.pendingTodoColor,
     getColorSetting(settings?.taskTitleColor, DEFAULT_SETTINGS.taskTextColor),
   );
+  const hasPreviousDefaultScales =
+    settings?.collapsedScale === 0.81 && settings.expandedScale === 0.88;
+  const collapsedScale = hasPreviousDefaultScales
+    ? DEFAULT_SETTINGS.collapsedScale
+    : settings?.collapsedScale ?? settings?.sizeScale ?? DEFAULT_SETTINGS.collapsedScale;
+  const expandedScale = hasPreviousDefaultScales
+    ? DEFAULT_SETTINGS.expandedScale
+    : settings?.expandedScale ?? settings?.sizeScale ?? DEFAULT_SETTINGS.expandedScale;
 
   return {
     appearanceMode:
@@ -540,12 +548,12 @@ function normalizeSettings(
     ),
     opacity: clamp(Number(settings?.opacity ?? DEFAULT_SETTINGS.opacity), 50, 100),
     collapsedScale: clamp(
-      Number(settings?.collapsedScale ?? settings?.sizeScale ?? DEFAULT_SETTINGS.collapsedScale),
+      Number(collapsedScale),
       0.75,
       1.4,
     ),
     expandedScale: clamp(
-      Number(settings?.expandedScale ?? settings?.sizeScale ?? DEFAULT_SETTINGS.expandedScale),
+      Number(expandedScale),
       0.75,
       1.4,
     ),
@@ -1183,7 +1191,7 @@ function IslandShell({
             <button
               className="icon-button"
               type="button"
-              title="翻译（Alt+Space）"
+              title="翻译（Alt+C）"
               aria-label="打开翻译"
               onClick={(event) => {
                 event.stopPropagation();
