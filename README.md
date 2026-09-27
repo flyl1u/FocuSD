@@ -50,11 +50,11 @@ FocuSD 想解决的核心问题，是工作和学习过程中频繁的窗口切�
 
 下面是 FocuSD 的功能演示：
 
-<video src="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4" controls preload="metadata" width="100%">
-  <a href="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4">下载 Demo 视频</a>
-</video>
+<a href="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4">
+  <img src="docs/demo-preview.gif" alt="FocuSD Demo 预览">
+</a>
 
-如果当前 GitHub 页面没有直接显示播放器，也可以点击这里：[下载 Demo 视频](https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4)。
+点击上方预览图可以打开完整视频，也可以直接[下载 Demo 视频](https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4)。
 
 ## Tech Stack 如何使用
 
@@ -90,6 +90,84 @@ pnpm tauri build
 也可以直接从 [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest) 下载 Windows x64 安装包。
 
 ## Star History 增长趋势
+
+<a href="https://www.star-history.com/?repos=flyl1u%2Ffocusd&type=date&legend=top-left">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&theme=dark&legend=top-left" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&legend=top-left" />
+    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&legend=top-left" />
+  </picture>
+</a>
+
+---
+
+# English
+
+## What is this?
+
+FocuSD Island is a Windows-first desktop island that puts your Todo List, clipboard, Codex status, and quick translation at the top of the screen.
+
+It runs as a lightweight, borderless, always-on-top floating island. Expand it when you need information, then return to the compact state and keep working.
+
+## Why I built this
+
+During everyday work and study, I often write Todo Lists in Obsidian, open music to block out noise, use translation websites, and copy or paste code, passwords, and document snippets.
+
+Switching between all those windows reduces efficiency and makes it easier to lose focus. I wanted to bring these frequent actions into one lightweight place.
+
+Apple's Dynamic Island was an inspiration: it gathers delivery updates, timers, media controls, and other information into one small surface. FocuSD follows the same idea for focused study and deep work. The name stands for **Focu Study and DeepWork**, and the app is built with the lightweight Tauri framework.
+
+## Features
+
+FocuSD is designed to reduce the number of window switches during work and study:
+
+- **Todo List**: write down and review current tasks without reopening a notes app.
+- **Clipboard**: find recently copied content quickly instead of searching for it again.
+- **Codex Status**: check the current Codex task state without switching back to Codex.
+- **Quick Translate**: copy selected text and translate it without jumping between a browser and a translation website.
+
+The goal is simple: shorten the path to high-frequency information so you can look at the top of the screen and return to your work.
+
+## Screenshots / Demo
+
+<a href="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4">
+  <img src="docs/demo-preview.gif" alt="FocuSD Demo preview">
+</a>
+
+Click the preview to open the full demo, or [download the demo video](https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4).
+
+## Tech Stack / How to use
+
+- Tauri 2 for the Windows desktop shell and native capabilities
+- React 19 + TypeScript for the interface and interactions
+- Rust for windows, shortcuts, clipboard, media, and file capabilities
+- pnpm for dependency management and project scripts
+
+### Build from source
+
+You need Windows 10/11, Node.js, pnpm, Rust, Visual Studio C++ Build Tools, and WebView2 Runtime.
+
+```powershell
+git clone https://github.com/flyl1u/FocuSD.git
+cd FocuSD
+pnpm install
+pnpm tauri dev
+```
+
+### Build a release
+
+```powershell
+pnpm tauri build
+```
+
+The generated installers are placed in:
+
+- `src-tauri/target/release/bundle/nsis/FocuSD Island_VERSION_x64-setup.exe`
+- `src-tauri/target/release/bundle/msi/FocuSD Island_VERSION_x64_en-US.msi`
+
+You can also download the latest Windows x64 installers from [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest).
+
+## Star History
 
 <a href="https://www.star-history.com/?repos=flyl1u%2Ffocusd&type=date&legend=top-left">
   <picture>
