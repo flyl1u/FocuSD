@@ -51,7 +51,7 @@ FocuSD 想解决的核心问题，是工作和学习过程中频繁的窗口切�
 下面是 FocuSD 的功能演示：
 
 <a href="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4">
-  <img src="docs/demo-preview.gif" alt="FocuSD Demo 预览">
+  <img src="https://raw.githubusercontent.com/flyl1u/FocuSD/ac9ba9e0d61a8f779a66bb0b5a52ccef3e515ef7/docs/demo-preview.gif" alt="FocuSD Demo 预览">
 </a>
 
 点击上方预览图可以打开完整视频，也可以直接[下载 Demo 视频](https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4)。
@@ -131,7 +131,7 @@ The goal is simple: shorten the path to high-frequency information so you can lo
 ## Screenshots / Demo
 
 <a href="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4">
-  <img src="docs/demo-preview.gif" alt="FocuSD Demo preview">
+  <img src="https://raw.githubusercontent.com/flyl1u/FocuSD/ac9ba9e0d61a8f779a66bb0b5a52ccef3e515ef7/docs/demo-preview.gif" alt="FocuSD Demo preview">
 </a>
 
 Click the preview to open the full demo, or [download the demo video](https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4).
