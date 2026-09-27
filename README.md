@@ -1,14 +1,14 @@
 <div align="center">
-  <img src="src-tauri/icons/128x128.png" alt="FocuSD Island 图标" width="96" height="96">
+  <img src="src-tauri/icons/128x128.png" alt="FocuSD Island logo" width="96" height="96">
 
   <h1>FocuSD Island</h1>
 
-  <p>把待办、剪贴板、Codex状态和快捷翻译放在屏幕顶部的Windows灵动岛</p>
+  <p>一款 Windows 优先的桌面灵动岛，把待办、剪贴板、Codex 状态和快捷翻译放在屏幕顶部。</p>
 
   <p>
-    <a href="https://github.com/flyl1u/FocuSD/releases/latest">下载 Windows 版</a>
+    <a href="https://github.com/flyl1u/FocuSD/releases/latest">下载 Release</a>
     ·
-    <a href="https://github.com/flyl1u/FocuSD/issues">反馈问题</a>
+    <a href="https://github.com/flyl1u/FocuSD/issues">反馈 Issue</a>
   </p>
 
   <p>
@@ -19,61 +19,53 @@
   </p>
 </div>
 
-## 它能做什么
+## What is this? 这是什么？
 
-FocuSD Island 平时以紧凑的小岛停靠在屏幕顶部，需要时展开操作。窗口无边框、始终置顶，可设置折叠和展开后的尺寸，也可从托盘管理。
+这是一款 Windows 优先的桌面灵动岛，把待办、剪贴板、Codex 状态和快捷翻译放在屏幕顶部。
 
-| 功能 | 用法 |
-| --- | --- |
-| 待办与每日笔记 | 安排今日任务、标记当前专注任务、拖动排序、回顾跨天归档；每日内容可保存为本地 Markdown。 |
-| 剪贴板历史 | 记录文本与图片，按内容或备注搜索，收藏常用片段并再次复制。 |
-| Codex 状态灯 | 在岛屿上查看 Codex 任务的运行、完成、失败或中断状态。 |
-| 快捷翻译 | 按 `Alt+C` 打开置顶翻译窗，使用 DeepSeek 进行中英互译。 |
-| 媒体与外观 | 控制系统媒体，调整岛屿布局、颜色、透明度和样式预设。 |
+FocuSD 以轻量、无边框、始终置顶的悬浮岛形式运行。它会在需要时展开，用完后回到紧凑状态，减少为了获取一条信息而切换窗口的次数。
 
-## 下载与安装
+## Why I built this？ 我为什么做它？
 
-面向 Windows 10/11。打开 [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest)，下载适合你的 x64 安装包：
+在日常工作或学习过程中，我经常需要在 Obsidian 里写下 Todo List，为了隔绝噪音，我还会打开音乐软件并把音量调到合适的临界点，工作和学习又经常需要借助翻译网站，同时还会反复复制和粘贴代码、密码或文档片段等等
 
-- `FocuSD Island_0.2.4_x64-setup.exe`：常规安装程序，推荐多数用户使用。
-- `FocuSD Island_0.2.4_x64_en-US.msi`：适合需要 MSI 安装包的环境。
+在这些界面之间来回切换，不仅会降低效率，也容易让人分心，因此我开始思考：能不能把这些高频功能集成到一个足够轻量的地方？
 
-运行安装包并按提示完成安装。应用使用 WebView2；如果系统尚未安装，需先安装 Microsoft Edge WebView2 Runtime。
+我想到了苹果的灵动岛，它把外卖配送、计时器、媒体控制等信息集中到一个小岛上，缩短了我们获取信息的路程。于是，FocuSD 诞生了。这个名字寓意 **Focu Study and DeepWork**，专注学习和深度工作，项目使用更轻量的 Tauri 架构开发
 
-## 使用指南
+## Features 解决了什么问题？
 
-### 悬浮岛与日常记录
+FocuSD 想解决的核心问题，是工作和学习过程中频繁的窗口切换。
 
-展开岛屿即可添加待办、设置当前专注任务和写每日笔记。你可以在设置中分别调整折叠岛与展开岛的尺寸；新用户默认值分别为 `0.82` 和 `0.91`。需要保存每日内容时，在设置中选择 Markdown 文件夹，应用会按 `YYYY-MM-DD.md` 写入。默认 Todo 文件夹为 `%USERPROFILE%\Documents\FocuSD`。
+它把一些高频、但原本分散在不同软件中的操作放到了屏幕顶部：
 
-剪贴板历史支持文本、图片、备注、搜索和收藏。它与快捷翻译读取的系统剪贴板是两个功能：即使没有打开历史面板，翻译窗的 `Tab` 仍会读取当前最新复制的文本。
+- **Todo List**：随手记录和查看当前待办，不需要反复打开笔记软件。
+- **Clipboard**：快速找到最近复制过的内容，减少重复查找和复制。
+- **Codex Status**：随时查看 Codex 当前任务状态，不需要频繁切回窗口确认进度。
+- **Quick Translate**：复制选中的文字后快速翻译，减少在浏览器和翻译工具之间来回跳转。
 
-### 快捷翻译
+这些功能本身并不复杂，FocuSD 真正想做的是**缩短获取高频信息的路径**：需要的时候看一眼屏幕顶部，用完之后继续专注于当前的事情
 
-按 `Alt+C` 或点击岛屿中的翻译按钮打开翻译窗；再次按快捷键或点击关闭按钮即可隐藏。翻译窗默认居中并保持置顶，可以拖动标题栏移动，也可以拖动右侧、下侧和右下角调整大小。本次运行期间会记住你调整后的位置与尺寸。
+## Screenshots / Demo 实际效果
 
-| 操作 | 效果 |
-| --- | --- |
-| `Tab` | 在翻译主界面的任意控件上，重新读取**当前**文本剪贴板并替换原文。 |
-| `Enter` | 翻译原文。 |
-| `Shift+Enter` | 在原文中换行。 |
-| `Alt+C` | 打开或关闭翻译窗；可在翻译设置中修改。 |
+下面是 FocuSD 的功能演示：
 
-可选择自动识别、中文译英文或英文译中文。翻译由 DeepSeek API 提供，首次使用时请在翻译窗设置中填入自己的 API 密钥。密钥存入本机 Windows 凭据管理器；只有发起翻译时，原文才会发送至 DeepSeek。单次最多翻译 5,000 字。
+<video src="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4" controls preload="metadata" width="100%">
+  <a href="https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4">下载 Demo 视频</a>
+</video>
 
-如果 `Alt+C` 已被其他软件占用，请在翻译设置中录入新的全局快捷键。
+如果当前 GitHub 页面没有直接显示播放器，也可以点击这里：[下载 Demo 视频](https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4)。
 
-### Codex 状态灯
+## Tech Stack 如何使用
 
-在 **设置 → AI Agent 状态灯** 中点击 **安装/修复**，然后前往 Codex 的 **设置 → Hooks**（CLI 使用 `/hooks`），找到两条 **Updating FocuSD agent status**，审核并信任它们，最后重启 Codex。未经信任的 hook 可能被 Codex 跳过。
+项目使用以下技术构建：
 
-状态文件位于 `%APPDATA%\com.focusd.island\agent-status.json`。
+- Tauri 2：Windows 桌面应用外壳和原生能力
+- React 19 + TypeScript：前端界面和交互
+- Rust：窗口、快捷键、剪贴板、媒体和文件等桌面能力
+- pnpm：依赖安装与项目脚本
 
-## 数据与隐私
-
-待办、笔记、归档、外观和翻译偏好保存在本机。剪贴板历史与 Codex 状态保存在应用数据目录；你选择 Markdown 保存目录后，每日内容也会写入该目录。DeepSeek API 密钥保存在 Windows 凭据管理器，翻译原文会在你主动翻译时发送给 DeepSeek。
-
-## 从源码构建
+### 从源码构建
 
 需要 Windows 10/11、Node.js、pnpm、Rust、Visual Studio C++ Build Tools 和 WebView2 Runtime。
 
@@ -84,26 +76,25 @@ pnpm install
 pnpm tauri dev
 ```
 
-构建供 GitHub Release 上传的安装包：
+### 构建 Release
 
 ```powershell
 pnpm tauri build
 ```
 
-构建完成后，独立程序位于 `src-tauri/target/release/focusd-island.exe`，NSIS 安装包位于 `src-tauri/target/release/bundle/nsis/`，MSI 位于 `src-tauri/target/release/bundle/msi/`。
+构建完成后，安装包位于：
 
-## 反馈与许可
+- `src-tauri/target/release/bundle/nsis/FocuSD Island_版本号_x64-setup.exe`
+- `src-tauri/target/release/bundle/msi/FocuSD Island_版本号_x64_en-US.msi`
 
-欢迎通过 [Issue](https://github.com/flyl1u/FocuSD/issues) 反馈问题，并附上 Windows 版本、应用版本、复现步骤及截图。仓库目前尚未声明开源许可证。
+也可以直接从 [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest) 下载 Windows x64 安装包。
 
----
+## Star History 增长趋势
 
-## English
-
-FocuSD Island is an always-on-top Windows desktop island for tasks, daily notes, clipboard history, Codex status, media controls, and quick Chinese–English translation.
-
-Download the x64 `.exe` installer or `.msi` package from [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest). To build from source, install Node.js, pnpm, Rust, Visual Studio C++ Build Tools, and WebView2, then run `pnpm install` and `pnpm tauri build`.
-
-Press `Alt+C` to open the DeepSeek translation window. Press `Tab` anywhere in its main view to read the **current text clipboard** and replace the source text, `Enter` to translate, or `Shift+Enter` for a new line. Add your own DeepSeek API key in translation settings; it is stored in Windows Credential Manager. Translation text is sent to DeepSeek only when you request a translation. The window stays on top and can be moved or resized.
-
-To enable the Codex status light, use **Settings → AI Agent status light → Install/Repair**, trust both **Updating FocuSD agent status** hooks in Codex, and restart Codex.
+<a href="https://www.star-history.com/?repos=flyl1u%2Ffocusd&type=date&legend=top-left">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&theme=dark&legend=top-left" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&legend=top-left" />
+    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&legend=top-left" />
+  </picture>
+</a>

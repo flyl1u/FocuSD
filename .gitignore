@@ -24,4 +24,4 @@ src-tauri/gen
 *.njsproj
 *.sln
 *.sw?
-demo.mp4
+/demo.mp4
