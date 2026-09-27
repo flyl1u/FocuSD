@@ -97,6 +97,16 @@ pnpm tauri build
 欢迎通过 [Issue](https://github.com/flyl1u/FocuSD/issues) 反馈问题，并附上 Windows 版本、应用版本、复现步骤及截图。仓库目前尚未声明开源许可证。
 
 ---
+## Star History
+
+<a href="https://www.star-history.com/?repos=flyl1u%2Ffocusd&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=flyl1u/focusd&type=date&legend=top-left" />
+ </picture>
+</a>
+---
 
 ## English
 
