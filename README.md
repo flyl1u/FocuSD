@@ -19,13 +19,13 @@
   </p>
 </div>
 
-## What is this? 这是什么？
+## 这是什么
 
 这是一款 Windows 优先的桌面灵动岛，把待办、剪贴板、Codex 状态和快捷翻译放在屏幕顶部。
 
 FocuSD 以轻量、无边框、始终置顶的悬浮岛形式运行。它会在需要时展开，用完后回到紧凑状态，减少为了获取一条信息而切换窗口的次数。
 
-## Why I built this？ 我为什么做它？
+## 我为什么做它
 
 在日常工作或学习过程中，我经常需要在 Obsidian 里写下 Todo List，为了隔绝噪音，我还会打开音乐软件并把音量调到合适的临界点，工作和学习又经常需要借助翻译网站，同时还会反复复制和粘贴代码、密码或文档片段等等
 
@@ -33,7 +33,7 @@ FocuSD 以轻量、无边框、始终置顶的悬浮岛形式运行。它会在�
 
 我想到了苹果的灵动岛，它把外卖配送、计时器、媒体控制等信息集中到一个小岛上，缩短了我们获取信息的路程。于是，FocuSD 诞生了。这个名字寓意 **Focu Study and DeepWork**，专注学习和深度工作，项目使用更轻量的 Tauri 架构开发
 
-## Features 解决了什么问题？
+## 解决了什么问题
 
 FocuSD 想解决的核心问题，是工作和学习过程中频繁的窗口切换。
 
@@ -46,7 +46,7 @@ FocuSD 想解决的核心问题，是工作和学习过程中频繁的窗口切�
 
 这些功能本身并不复杂，FocuSD 真正想做的是**缩短获取高频信息的路径**：需要的时候看一眼屏幕顶部，用完之后继续专注于当前的事情
 
-## Demo 实际效果
+## 实际效果
 
 下面是 FocuSD 的功能演示：
 
@@ -56,7 +56,7 @@ FocuSD 想解决的核心问题，是工作和学习过程中频繁的窗口切�
 
 点击上方预览图可以打开完整视频，也可以直接[下载 Demo 视频](https://raw.githubusercontent.com/flyl1u/FocuSD/main/docs/demo.mp4)。
 
-## Tech Stack 如何使用
+## 如何使用
 
 项目使用以下技术构建：
 
@@ -89,7 +89,7 @@ pnpm tauri build
 
 也可以直接从 [GitHub Releases](https://github.com/flyl1u/FocuSD/releases/latest) 下载 Windows x64 安装包。
 
-## Star History 增长趋势
+## Star History
 
 <a href="https://www.star-history.com/?repos=flyl1u%2Ffocusd&type=date&legend=top-left">
   <picture>
